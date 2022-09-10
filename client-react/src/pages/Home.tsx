@@ -218,6 +218,10 @@ const HeroContent = styled.div`
   h1 {
     font-family: "PT Serif", serif;
     font-size: 3rem;
+
+    @media screen and (max-width: 24rem) {
+      font-size: 2rem;
+    }
   }
 
   p {
@@ -261,6 +265,16 @@ const HeroContent = styled.div`
       bottom: -2rem;
       right: -2rem;
       z-index: 1;
+    }
+  }
+
+  @media screen and (max-width: 48rem) {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+
+    .hero-img img {
+      padding-inline: 2rem;
+      max-height: 25rem;
     }
   }
 
@@ -317,6 +331,11 @@ const ShopContent = styled.div`
         color: white;
         background-color: #574545;
       }
+    }
+
+    @media screen and (max-width: 36rem) {
+      text-align: center;
+      flex-direction: column;
     }
   }
 
@@ -407,11 +426,16 @@ const ProductsContent = styled.div`
         background-color: #574545;
       }
     }
+
+    @media screen and (max-width: 36rem) {
+      flex-direction: column;
+      text-align: center;
+    }
   }
 
   .products-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: 2rem;
     margin-top: 2rem;
   }
@@ -463,13 +487,19 @@ const AboutWrapper = styled.div`
 `;
 
 const AboutContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 8rem;
+  @media screen and (min-width: 48rem) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 8rem;
+  }
 
   .about-content {
-    padding-block: 8rem;
+    padding-block: 4rem;
+
+    @media screen and (min-width: 48rem) {
+      padding-block: 8rem;
+    }
   }
 
   & > div {
@@ -479,14 +509,21 @@ const AboutContent = styled.div`
     position: relative;
 
     img {
-      width: 200%;
-      height: 100%;
+      width: 100%;
+      max-height: 25rem;
       object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: -100%;
-      right: 0;
-      bottom: 0;
+      margin-top: 2rem;
+
+      @media screen and (min-width: 48rem) {
+        width: 200%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        right: 0;
+        bottom: 0;
+      }
     }
 
     h1 {
@@ -516,12 +553,19 @@ const AboutContent = styled.div`
 
 const TestimonialsContent = styled.div`
   margin-block: 8rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 4rem;
+
+  @media screen and (min-width: 48rem) {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+  }
 
   & > div {
-    margin-block: auto;
+    margin-block: 0 2rem;
+
+    @media screen and (min-width: 48rem) {
+      margin-block: auto;
+    }
   }
 
   .quotes {

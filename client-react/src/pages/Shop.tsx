@@ -12,24 +12,34 @@ const Shop = () => {
   }, []);
 
   return (
-    <div className="page-container">
+    <Wrapper className="page-container">
       <Title>Shop</Title>
-      <Filter />
-      <ProductsContainer>
-        {products?.map((product: any) => (
-          <Product
-            key={product.id}
-            image={product.image}
-            name={product.title}
-            price={product.price}
-          />
-        ))}
-      </ProductsContainer>
-    </div>
+      <div className="fixed-container">
+        <Filter />
+        <ProductsContainer>
+          {products?.map((product: any) => (
+            <Product
+              key={product.id}
+              image={product.image}
+              name={product.title}
+              price={product.price}
+            />
+          ))}
+        </ProductsContainer>
+      </div>
+    </Wrapper>
   );
 };
 
 export default Shop;
+
+const Wrapper = styled.div`
+  position: relative;
+
+  .fixed-container {
+    position: relative;
+  }
+`;
 
 const Title = styled.h1`
   text-align: center;

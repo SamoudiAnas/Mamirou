@@ -111,6 +111,11 @@ const WelcomeContent = styled.section`
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
 
+  @media screen and (max-width: 48rem) {
+    display: flex;
+    flex-direction: column;
+  }
+
   & > div {
     margin-block: auto;
   }
@@ -206,6 +211,14 @@ const InfoContent = styled.section`
       color: #574545;
       line-height: 1.5rem;
       margin-block: 1rem 3rem;
+    }
+
+    @media screen and (max-width: 48rem) {
+      min-width: 20rem;
+      padding: 1rem;
+      img {
+        height: 30rem;
+      }
     }
   }
 `;

@@ -38,7 +38,7 @@ const Navbar = () => {
               <Link to="/">Blog</Link>
             </li>
             <li>
-              <Link to="/">Contact</Link>
+              <Link to="/contact">Contact</Link>
             </li>
           </NavLinks>
         </nav>
@@ -102,7 +102,7 @@ const NavLinks = styled.ul`
 
   @media screen and (max-width: 48rem) {
     position: absolute;
-    top: ${(props: { isOpen: boolean }) => (props.isOpen ? "-1000%" : "100%")};
+    top: ${(props: { isOpen: boolean }) => (props.isOpen ? "100%" : "-1000%")};
     left: 0;
     z-index: 999;
     background-color: white;
