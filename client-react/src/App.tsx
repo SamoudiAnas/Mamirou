@@ -1,14 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Default UI/Layout";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //PAGES
-import About from "./pages/About";
-import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
+import About from "./pages/About";
+import Signup from "./pages/Signup";
+import Contact from "./pages/Contact";
+import Wishlist from "./pages/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart";
 import SingleProduct from "./pages/SingleProduct";
-import Wishlist from "./pages/Wishlist";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/my-cart" element={<ShoppingCart />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/product" element={<SingleProduct />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Layout>
     </Router>
