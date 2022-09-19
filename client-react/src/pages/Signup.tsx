@@ -13,20 +13,58 @@ const Signup = () => {
 
         <form>
           <div className="double-input-container">
-            <Input name="" placeholder="" label="" />
-            <Input name="" placeholder="" label="" />
+            <Input
+              name="First name"
+              placeholder="First name"
+              label="First name"
+            />
+            <Input name="Last name" placeholder="Last name" label="Last name" />
           </div>
           <div className="double-input-container">
-            <Input name="" placeholder="" label="" />
-            <Input name="" placeholder="" label="" />
+            <Input name="Country" placeholder="Country*" label="Country" />
+            <Input
+              name="Phone (optional)"
+              placeholder="Phone (optional)"
+              label="Phone (optional)"
+            />
           </div>
-          <Input name="" placeholder="" label="" />
-          <Input name="" placeholder="" label="" />
           <div className="double-input-container">
-            <Input name="" placeholder="" label="" />
-            <Input name="" placeholder="" label="" />
+            <Input name="Email" placeholder="Email" label="Email" />
+            <Input
+              name="Confirm Email"
+              placeholder="Confirm Email"
+              label="Confirm Email"
+            />
+          </div>
+          <div className="double-input-container">
+            <Input name="Password" placeholder="Password" label="Password" />
+            <Input
+              name="Confirm Password"
+              placeholder="Confirm Password"
+              label="Confirm Password"
+            />
+          </div>
+          <br />
+          <div className="double-input-container">
+            <input type="checkbox" name="" id="" />
+            <p>
+              I agree to my data and purchase preferences being shared only
+              within the Sonia Rykiel family for analysis and for a unique and
+              personalized experience;*
+            </p>
+          </div>
+          <br />
+          <div className="double-input-container">
+            <input type="checkbox" name="" id="" />
+            <p>
+              I agree to my data and purchase preferences being shared only
+              within the Sonia Rykiel family for analysis and for a unique and
+              personalized experience;*
+            </p>
           </div>
         </form>
+
+        <button className="cta-btn">CREATE MY ACCOUNT</button>
       </Wrapper>
     </div>
   );
@@ -56,6 +94,24 @@ const Wrapper = styled.div`
 
     div {
       flex: 1 1 45%;
+    }
+  }
+
+  .cta-btn {
+    display: block;
+    margin: 4rem auto 8rem;
+    padding: 1rem 3rem;
+    background-color: #574545;
+    border: 2px solid #574545;
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background-color: #574545;
     }
   }
 `;
