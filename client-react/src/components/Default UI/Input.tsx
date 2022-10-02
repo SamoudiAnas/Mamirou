@@ -7,11 +7,11 @@ interface InputProps {
   label: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, placeholder }) => {
+const Input: React.FC<InputProps> = ({ name, label }) => {
   return (
     <InputWrapper>
-      <input type="text" placeholder={placeholder} />
-      <label htmlFor={name} className="placeholder">
+      <input type="text" id={name} placeholder=" " />
+      <label htmlFor="" className="placeholder">
         {name}
       </label>
     </InputWrapper>
@@ -45,7 +45,7 @@ const InputWrapper = styled.div`
   .placeholder {
     font-family: "Montserrat", sans-serif;
     position: absolute;
-    top: calc(0.75rem + 1px);
+    top: 0.75rem;
     left: 9px;
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
