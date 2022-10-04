@@ -37,17 +37,20 @@ const Contact = () => {
             </div>
             <form>
                 <Input
+                    type="text"
                     name="Full name"
                     placeholder="Full name"
                     label="Full name"
                 />
                 <Input
+                    type="email"
                     name="Your email"
                     placeholder="Your email"
                     label="Your email"
                 />
 
                 <Input
+                    type="text"
                     name="Type a subject"
                     placeholder="Type a subject"
                     label="Type a subject"
