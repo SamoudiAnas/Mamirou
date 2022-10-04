@@ -4,6 +4,13 @@ import Link from "next/link";
 
 import client from "../../client";
 import styled from "styled-components";
+import urlFor from "../../lib/ImageBuilder";
+import { PortableText } from "@portabletext/react";
+
+//store
+import { bindActionCreators } from "redux";
+import { cartAC } from "../../store";
+import { useDispatch } from "react-redux";
 
 //icons
 import { AiOutlineHeart } from "react-icons/ai";
@@ -11,27 +18,41 @@ import { AiOutlineHeart } from "react-icons/ai";
 //comps
 import Review from "../../components/Review/Review";
 import Carousel from "./Carousel";
-import urlFor from "../../lib/ImageBuilder";
+
+//types
+import { Product } from "../../types/product";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 interface ProductProps {
-    product: any;
+    product: Product;
 }
 
 const SingleProduct: React.FC<ProductProps> = ({ product }) => {
     const [quantity, setQuantity] = useState<number>(1);
+
+    //router
     const router = useRouter();
     const { slug } = router.query;
 
+    //redux
+    const dispatch = useDispatch();
+    const { addItemToCart } = bindActionCreators(cartAC, dispatch);
+
+    //handlers
     const handleAdd = () => {
         setQuantity(quantity + 1);
     };
+
     const handleMinus = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1);
         }
     };
 
-    console.log(product);
+    const addToCart = () => {
+        addItemToCart(product, quantity);
+    };
+
     return (
         <Wrapper className="page-container">
             <ProductRoute>
@@ -45,7 +66,9 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
             {/*-------------------------- */}
             <ProductPreview>
                 <Carousel
-                    images={product.image.map((img: any) => urlFor(img).url())}
+                    images={product.image.map((img: SanityImageSource) =>
+                        urlFor(img).url()
+                    )}
                 />
 
                 <div className="product-info">
@@ -75,10 +98,18 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
                             </button>
                         </div>
                         <AiOutlineHeart className="add-wishlist" />
-                        <button className="add-cart">Add to Cart</button>
+                        <button className="add-cart" onClick={addToCart}>
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             </ProductPreview>
+            <div>
+                <h1 className="details-title">Details</h1>
+                <div className="details-content">
+                    <PortableText value={product.details} />
+                </div>
+            </div>
         </Wrapper>
     );
 };
@@ -104,15 +135,36 @@ export async function getStaticProps(context: any) {
     `,
         { slug }
     );
+
+    const newProduct = {
+        _id: product._id,
+        slug: product.slug.current,
+        price: product.price,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        details: product.Details,
+        for: product.for,
+        colors: product.colors,
+    };
+
     return {
         props: {
-            product,
+            product: newProduct,
         },
     };
 }
 
 const Wrapper = styled.div`
     padding-bottom: 8rem;
+
+    .details-title {
+        padding-top: 5rem;
+    }
+
+    .details-content {
+        margin-block: 2rem;
+    }
 `;
 
 const ProductRoute = styled.div`
@@ -132,10 +184,12 @@ const ProductRoute = styled.div`
 `;
 
 const ProductPreview = styled.section`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
     margin-bottom: 2rem;
+    @media screen and (min-width: 48rem) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+    }
 
     .product-info {
         padding-top: 4rem;
@@ -165,6 +219,10 @@ const ProductPreview = styled.section`
         font-weight: 600;
         font-family: "Montserrat", sans-serif;
         color: white;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .main-img {

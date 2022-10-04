@@ -1,19 +1,28 @@
 import { Reducer } from "redux";
+import { Product } from "../../types/product";
 import { CartActionTypes } from "../action-types";
 import { CartAction } from "../actions";
 
-interface Products {
-    productID: string;
+interface CartItem {
+    product: Product;
     quantity: number;
 }
 
-const cartReducer: Reducer<Products[], CartAction> = (state = [], action) => {
+const cartReducer: Reducer<CartItem[], CartAction> = (state = [], action) => {
     switch (action.type) {
         case CartActionTypes.CART.ADD_ITEM:
+            if (
+                state.filter(
+                    (product) =>
+                        product.product._id == action.payload.product._id
+                ).length !== 0
+            ) {
+                return state;
+            }
             return [
                 ...state,
                 {
-                    productID: action.payload.productID,
+                    product: action.payload.product,
                     quantity: action.payload.quantity,
                 },
             ];
@@ -21,11 +30,11 @@ const cartReducer: Reducer<Products[], CartAction> = (state = [], action) => {
         case CartActionTypes.CART.EDIT_ITEM:
             //get the products without the edited one
             const newProducts = state.filter(
-                (product) => product.productID !== action.payload.productID
+                (product) => product.product._id !== action.payload.product._id
             );
             //get the edited product
             const product = state.filter(
-                (product) => product.productID === action.payload.productID
+                (product) => product.product._id === action.payload.product._id
             );
             //mix into an new array with the new data
             return [
@@ -35,7 +44,7 @@ const cartReducer: Reducer<Products[], CartAction> = (state = [], action) => {
 
         case CartActionTypes.CART.DELETE_ITEM:
             const newState = state.filter(
-                (product) => product.productID !== action.payload.productID
+                (product) => product.product._id !== action.payload.product._id
             );
             return newState;
 

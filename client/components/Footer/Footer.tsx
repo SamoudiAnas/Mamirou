@@ -6,12 +6,10 @@ const Footer = () => {
     return (
         <FooterWrapper>
             <div className="title-container page-container">
-                <div>
-                    <h1>
-                        Subscribe to receive 10% off your next purchase. <br />{" "}
-                        Plus hear about about new arrivals and offers.
-                    </h1>
-                </div>
+                <h1>
+                    Subscribe to receive 10% off your next purchase. Plus hear
+                    about about new arrivals and offers.
+                </h1>
                 <button>CONTACT US</button>
             </div>
             <FooterContent className="page-container">
@@ -89,9 +87,10 @@ const FooterWrapper = styled.div`
         border-bottom: 1px solid white;
 
         h1 {
-            flex: 1 1 20%;
-            font-family: "PT Serif", serif;
-            font-size: 1.75rem;
+            flex: 1 1 50%;
+            font-family: "Vujahday Script", serif;
+            font-size: 2.25rem;
+            min-width: 25rem;
             padding-right: 4rem;
         }
 

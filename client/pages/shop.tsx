@@ -4,6 +4,7 @@ import styled from "styled-components";
 //comps
 import Filter from "../components/Filter/Filter";
 import Product from "../components/Product/Product";
+import { Product as ProductType } from "../types/product";
 
 const Shop = ({ products }: { products: any }) => {
     console.log(products);
@@ -13,15 +14,8 @@ const Shop = ({ products }: { products: any }) => {
             <div className="fixed-container">
                 <Filter />
                 <ProductsContainer>
-                    {products?.map((product: any) => (
-                        <Product
-                            key={product._id}
-                            id={product._id}
-                            slug={product.slug.current}
-                            image={product.image[0]}
-                            name={product.name}
-                            price={product.price}
-                        />
+                    {products?.map((product: ProductType) => (
+                        <Product key={product._id} product={product} />
                     ))}
                 </ProductsContainer>
             </div>
@@ -35,9 +29,23 @@ export async function getStaticProps() {
       * [_type == "product"]
     `
     );
+
+    const newProducts = products.map((product: any) => {
+        return {
+            _id: product._id,
+            slug: product.slug.current,
+            price: product.price,
+            name: product.name,
+            image: product.image,
+            description: product.description,
+            details: product.Details,
+            for: product.for,
+            colors: product.colors,
+        };
+    });
     return {
         props: {
-            products,
+            products: newProducts,
         },
     };
 }
@@ -54,7 +62,8 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
     text-align: center;
-    font-family: "PT Serif", serif;
+    font-size: 5rem;
+    font-family: "Vujahday Script", serif;
     margin-block: 8rem 6rem;
 `;
 

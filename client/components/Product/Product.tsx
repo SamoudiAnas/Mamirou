@@ -6,41 +6,64 @@ import {
 import Link from "next/link";
 import styled from "styled-components";
 import urlFor from "../../lib/ImageBuilder";
+import { Product as ProductType } from "../../types/product";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { cartAC, RootState, wishlistAC } from "../../store";
 
 interface ProductProps {
-    id: string;
-    image: string;
-    name: string;
-    slug: string;
-    price: number;
+    product: ProductType;
 }
 
-const Product: React.FC<ProductProps> = ({ id, slug, image, name, price }) => {
+const Product: React.FC<ProductProps> = ({ product }) => {
+    //redux
+    const dispatch = useDispatch();
+
+    const { addItemToCart } = bindActionCreators(cartAC, dispatch);
+
+    const { addItemToWishlist } = bindActionCreators(wishlistAC, dispatch);
+    const wishlist = useSelector((state: RootState) => state.wishlist);
+    const cart = useSelector((state: RootState) => state.cart);
+
+    const addToCart = () => {
+        addItemToCart(product, 1);
+        console.log(cart);
+    };
+
+    const addToWishlist = () => {
+        addItemToWishlist(product);
+        console.log(wishlist);
+    };
+
     return (
         <ProductWrapper>
             <ProductIMGWrapper>
-                <Link href={"/product/" + slug}>
+                <Link href={"/product/" + product.slug}>
                     <img
-                        src={urlFor(image).url()}
+                        src={urlFor(product.image[0]).url()}
                         alt=""
                         className="product-thumbnail"
                     />
                 </Link>
                 <div className="product-icons">
-                    <AiOutlineHeart className="product-icon" />
-                    <AiOutlineShoppingCart
-                        className="product-icon"
-                        onClick={() => {
-                            console.log("added item id: " + id);
-                        }}
-                    />
-                    <Link href={"/product/" + slug}>
-                        <AiOutlineEye className="product-icon" />
+                    <div>
+                        <AiOutlineHeart
+                            className="product-icon"
+                            onClick={addToWishlist}
+                        />
+                    </div>
+                    <div className="product-icon" onClick={addToCart}>
+                        <AiOutlineShoppingCart />
+                    </div>
+                    <Link href={"/product/" + product.slug}>
+                        <div className="product-icon" onClick={addToWishlist}>
+                            <AiOutlineEye />
+                        </div>
                     </Link>
                 </div>
             </ProductIMGWrapper>
-            <p>{price}$</p>
-            <h3>{name}</h3>
+            <p>{product.price}$</p>
+            <h3>{product.name}</h3>
         </ProductWrapper>
     );
 };
@@ -125,16 +148,25 @@ const ProductIMGWrapper = styled.div`
         width: 3rem;
         height: 3rem;
         padding: 0.5rem;
-        fill: #574545;
         background-color: white;
         border-radius: 50%;
         transition: transform 0.3s ease-in-out;
+
+        svg {
+            fill: #574545;
+            width: 100%;
+            height: 100%;
+        }
 
         &:hover {
             cursor: pointer;
             background-color: #574545;
             fill: white;
             transform: scale(1.2);
+
+            svg {
+                fill: white;
+            }
         }
     }
 `;

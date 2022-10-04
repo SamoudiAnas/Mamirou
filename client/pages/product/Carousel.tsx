@@ -15,6 +15,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
                 <div className="all-imgs">
                     {images.map((image, index) => (
                         <img
+                            key={index}
                             src={image}
                             alt=""
                             className={

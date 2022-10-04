@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
-import cartReducer from "./cartReducer";
-import cartUIReducer from "./cartUIReducer";
+
+//reducers
 import filtersReducer from "./filtersReducer";
+import cartUIReducer from "./cartUIReducer";
+import wishlistReducer from "./wishlistReducer";
 import userReducer from "./userReducer";
+import cartReducer from "./cartReducer";
 
 const reducers = combineReducers({
+    wishlist: wishlistReducer,
     filters: filtersReducer,
     cartUI: cartUIReducer,
     user: userReducer,

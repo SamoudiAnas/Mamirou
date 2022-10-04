@@ -1,9 +1,10 @@
+import { Product } from "../../types/product";
 import { CartActionTypes } from "../action-types";
 
 interface ADD_ITEM {
     type: CartActionTypes.CART.ADD_ITEM;
     payload: {
-        productID: string;
+        product: Product;
         quantity: number;
     };
 }
@@ -11,7 +12,7 @@ interface ADD_ITEM {
 interface EDIT_ITEM {
     type: CartActionTypes.CART.EDIT_ITEM;
     payload: {
-        productID: string;
+        product: Product;
         quantity: number;
     };
 }
@@ -19,7 +20,7 @@ interface EDIT_ITEM {
 interface DELETE_ITEM {
     type: CartActionTypes.CART.DELETE_ITEM;
     payload: {
-        productID: string;
+        product: Product;
         quantity: number;
     };
 }

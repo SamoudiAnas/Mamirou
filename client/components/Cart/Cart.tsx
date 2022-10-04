@@ -9,15 +9,17 @@ import { AiOutlineClose } from "react-icons/ai";
 import { bindActionCreators } from "redux";
 import { cartUIAC, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
+import CartItem from "./CartItem";
 
 const Cart = () => {
     const dispatch = useDispatch();
     const cartUI = useSelector((state: RootState) => state.cartUI);
-
+    const cart = useSelector((state: RootState) => state.cart);
     const { closeCartUI } = bindActionCreators(cartUIAC, dispatch);
 
     return (
-        <Wrapper cartUI={cartUI} onClick={() => closeCartUI()}>
+        <Wrapper cartUI={cartUI}>
+            <div className="bg-layer" onClick={() => closeCartUI()}></div>
             <CartWrapper cartUI={cartUI}>
                 <h1 className="title">Your Cart</h1>
                 <AiOutlineClose
@@ -25,10 +27,20 @@ const Cart = () => {
                     onClick={() => closeCartUI()}
                 />
 
-                <div className="cart-empty">
-                    <CartEmptyIcon />
-                    <h2>Your cart is empty! Go back shopping.</h2>
-                </div>
+                {cart.length !== 0 ? (
+                    cart?.map((cartItem) => (
+                        <CartItem
+                            key={cartItem.product._id}
+                            product={cartItem.product}
+                            quantity={cartItem.quantity}
+                        />
+                    ))
+                ) : (
+                    <div className="cart-empty">
+                        <CartEmptyIcon />
+                        <h2>Your cart is empty! Go back shopping.</h2>
+                    </div>
+                )}
             </CartWrapper>
         </Wrapper>
     );
@@ -47,6 +59,17 @@ const Wrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.1);
     z-index: 999;
     transition: all 0.5s ease;
+
+    .bg-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: ${(props: { cartUI: boolean }) =>
+            props.cartUI ? "block" : "none"};
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 `;
 
 const CartWrapper = styled.div`
@@ -57,7 +80,7 @@ const CartWrapper = styled.div`
     background-color: #f8f8f8;
     min-height: 100vh;
     z-index: 9999;
-    padding: 4rem 2rem;
+    padding: 4rem 1rem;
     z-index: 999;
     display: flex;
     align-items: center;
@@ -67,6 +90,7 @@ const CartWrapper = styled.div`
     .title {
         text-align: center;
         font-family: "PT Serif", serif;
+        margin-bottom: 2rem;
     }
 
     .close-cart {

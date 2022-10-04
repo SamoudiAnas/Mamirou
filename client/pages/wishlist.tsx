@@ -1,32 +1,32 @@
+import { RootState } from "../store";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+
+//comps
 import WishlistItem from "../components/Wishlist/WishlistItem";
 
-interface WishlistProps {
-  productID: string;
-  productName: string;
-  productIMG: string;
-  inStock: boolean;
-}
-
 const Wishlist: React.FC = () => {
-  return (
-    <Wrapper className="page-container">
-      <Title>Wishlist</Title>
-      <WishlistItem />
-      <WishlistItem />
-      <WishlistItem />
-    </Wrapper>
-  );
+    const wishlist = useSelector((state: RootState) => state.wishlist);
+
+    return (
+        <Wrapper className="page-container">
+            <Title>Wishlist</Title>
+            {wishlist.map((product) => (
+                <WishlistItem product={product} key={product._id} />
+            ))}
+        </Wrapper>
+    );
 };
 
 export default Wishlist;
 
 const Title = styled.h1`
-  text-align: center;
-  font-family: "PT Serif", serif;
-  margin-block: 8rem;
+    text-align: center;
+    font-size: 5rem;
+    font-family: "Vujahday Script", serif;
+    margin-block: 8rem;
 `;
 
 const Wrapper = styled.div`
-  padding-bottom: 10rem;
+    padding-bottom: 10rem;
 `;

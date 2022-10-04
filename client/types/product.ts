@@ -1,6 +1,14 @@
+import { PortableTextBlock } from "@portabletext/types";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
 export interface Product {
-  name: string;
-  price: number;
-  images: string[];
-  promoted: number | boolean;
+    _id: string;
+    slug: string;
+    price: number;
+    name: string;
+    image: SanityImageSource[];
+    description: string;
+    details: PortableTextBlock;
+    for: string[];
+    colors: string[];
 }

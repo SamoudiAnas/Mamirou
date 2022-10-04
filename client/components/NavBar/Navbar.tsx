@@ -3,23 +3,38 @@ import { useState } from "react";
 import styled from "styled-components";
 
 //store
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import { cartUIAC } from "../../store";
+import { cartUIAC, RootState } from "../../store";
 
 //comps
 import SearchBar from "./SearchBar";
 
 //icons
 import { HiOutlineMenuAlt1, HiOutlineUserCircle } from "react-icons/hi";
-import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import {
+    AiOutlineHeart,
+    AiOutlineSearch,
+    AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+    const { pathname } = useRouter();
+
     const [isSearchBarOpen, setIsSearchBarOpen] = useState<boolean>(false);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
     const dispatch = useDispatch();
+    const cart = useSelector((state: RootState) => state.cart);
+    const wishlist = useSelector((state: RootState) => state.wishlist);
     const { openCartUI } = bindActionCreators(cartUIAC, dispatch);
+
+    const isActiveLink = (path: string): string => {
+        console.log(pathname);
+        if (pathname == path) return "active-link";
+        return "";
+    };
 
     return (
         <HeaderContainer>
@@ -34,19 +49,19 @@ const Navbar = () => {
 
                 <nav>
                     <NavLinks isOpen={isMenuOpen}>
-                        <li>
+                        <li className={isActiveLink("/")}>
                             <Link href="/">Home</Link>
                         </li>
-                        <li>
+                        <li className={isActiveLink("/about")}>
                             <Link href="/about">About</Link>
                         </li>
-                        <li>
+                        <li className={isActiveLink("/shop")}>
                             <Link href="/shop">Shop</Link>
                         </li>
-                        <li>
-                            <Link href="/">Blog</Link>
+                        <li className={isActiveLink("/blog")}>
+                            <Link href="/blog">Blog</Link>
                         </li>
-                        <li>
+                        <li className={isActiveLink("/contact")}>
                             <Link href="/contact">Contact</Link>
                         </li>
                     </NavLinks>
@@ -58,7 +73,18 @@ const Navbar = () => {
                         />
                     </Icon>
                     <Icon>
+                        <Link href="/wishlist">
+                            <AiOutlineHeart />
+                        </Link>
+                        {wishlist.length !== 0 && (
+                            <div className="cart-items">{wishlist.length}</div>
+                        )}
+                    </Icon>
+                    <Icon>
                         <AiOutlineShoppingCart onClick={() => openCartUI()} />
+                        {cart.length !== 0 && (
+                            <div className="cart-items">{cart.length}</div>
+                        )}
                     </Icon>
                     <Link href="/signup">
                         <Icon>
@@ -93,8 +119,12 @@ const Header = styled.header`
 `;
 
 const Logo = styled.h3`
-    font-family: "PT Serif", serif;
-    font-size: 1.25rem;
+    font-family: "Vujahday Script", serif;
+    font-size: 1.75rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const NavLinks = styled.ul`
@@ -110,6 +140,31 @@ const NavLinks = styled.ul`
     a {
         font-weight: 500;
         color: black;
+    }
+
+    li {
+        &:hover {
+            a {
+                color: #575454;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .active-link a {
+        color: #575454;
+        font-weight: 600;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: calc(-1.75rem + 2px);
+            left: -5px;
+            width: calc(100% + 10px);
+            height: 2px;
+            background-color: #575454;
+        }
     }
 
     @media screen and (max-width: 48rem) {
@@ -138,6 +193,23 @@ const IconsContainer = styled.ul`
 `;
 
 const Icon = styled.li`
+    position: relative;
+    .cart-items {
+        background-color: #575757;
+        border-radius: 50%;
+        height: 1.25rem;
+        width: 1.25rem;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+    }
+
     svg {
         width: 1.5rem;
         height: 1.5rem;
