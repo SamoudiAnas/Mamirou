@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import styled from "styled-components";
 import urlFor from "../../lib/ImageBuilder";
-import { cartAC } from "../../store";
+import { cartAC, toastAC } from "../../store";
 import { Product } from "../../types/product";
 
 interface WishlistItemProps {
@@ -13,9 +13,11 @@ const WishlistItem: React.FC<WishlistItemProps> = ({ product }) => {
     //redux
     const dispatch = useDispatch();
     const { addItemToCart } = bindActionCreators(cartAC, dispatch);
+    const { toast } = bindActionCreators(toastAC, dispatch);
 
     const addToCart = () => {
         addItemToCart(product, 1);
+        toast("Product added to your cart!");
     };
 
     return (

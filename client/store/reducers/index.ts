@@ -6,11 +6,13 @@ import cartUIReducer from "./cartUIReducer";
 import wishlistReducer from "./wishlistReducer";
 import userReducer from "./userReducer";
 import cartReducer from "./cartReducer";
+import toastReducer from "./toastReducer";
 
 const reducers = combineReducers({
     wishlist: wishlistReducer,
     filters: filtersReducer,
     cartUI: cartUIReducer,
+    toast: toastReducer,
     user: userReducer,
     cart: cartReducer,
 });

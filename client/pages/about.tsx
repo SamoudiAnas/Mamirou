@@ -1,10 +1,11 @@
+import { NextPage } from "next";
 import styled from "styled-components";
 
 import AboutIMG from "../assets/about2.jpg";
 import InfoIMG from "../assets/info1.jpg";
 import Info2IMG from "../assets/info2.jpg";
 
-const About = () => {
+const About: NextPage = () => {
     return (
         <>
             <Title>About Us</Title>
@@ -106,6 +107,19 @@ const Title = styled.h1`
     text-align: center;
     font-family: "PT Serif", serif;
     margin-block: 8rem;
+    position: relative;
+
+    &::before {
+        content: "About Us";
+        opacity: 0.1;
+        color: #575454;
+        font-family: "Vujahday Script", serif;
+        font-size: 8rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 `;
 
 const WelcomeContent = styled.section`

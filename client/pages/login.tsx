@@ -38,6 +38,20 @@ const Title = styled.h1`
     text-align: center;
     font-family: "PT Serif", serif;
     margin-block: 8rem 2rem;
+    position: relative;
+
+    &::before {
+        content: "Welcome Back";
+        opacity: 0.1;
+        white-space: nowrap;
+        color: #575454;
+        font-family: "Vujahday Script", serif;
+        font-size: 8rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 `;
 
 const Wrapper = styled.div`

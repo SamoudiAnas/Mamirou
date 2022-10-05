@@ -18,21 +18,16 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({ product }) => {
     //redux
     const dispatch = useDispatch();
-
     const { addItemToCart } = bindActionCreators(cartAC, dispatch);
-
     const { addItemToWishlist } = bindActionCreators(wishlistAC, dispatch);
-    const wishlist = useSelector((state: RootState) => state.wishlist);
     const cart = useSelector((state: RootState) => state.cart);
 
     const addToCart = () => {
         addItemToCart(product, 1);
-        console.log(cart);
     };
 
     const addToWishlist = () => {
         addItemToWishlist(product);
-        console.log(wishlist);
     };
 
     return (
@@ -46,11 +41,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                     />
                 </Link>
                 <div className="product-icons">
-                    <div>
-                        <AiOutlineHeart
-                            className="product-icon"
-                            onClick={addToWishlist}
-                        />
+                    <div className="product-icon" onClick={addToWishlist}>
+                        <AiOutlineHeart />
                     </div>
                     <div className="product-icon" onClick={addToCart}>
                         <AiOutlineShoppingCart />

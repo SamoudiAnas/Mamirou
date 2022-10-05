@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 //store
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +18,6 @@ import {
     AiOutlineSearch,
     AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { useRouter } from "next/router";
 
 const Navbar = () => {
     const { pathname } = useRouter();
@@ -31,7 +31,6 @@ const Navbar = () => {
     const { openCartUI } = bindActionCreators(cartUIAC, dispatch);
 
     const isActiveLink = (path: string): string => {
-        console.log(pathname);
         if (pathname == path) return "active-link";
         return "";
     };
@@ -59,7 +58,7 @@ const Navbar = () => {
                             <Link href="/shop">Shop</Link>
                         </li>
                         <li className={isActiveLink("/blog")}>
-                            <Link href="/blog">Blog</Link>
+                            <Link href="/cart">Blog</Link>
                         </li>
                         <li className={isActiveLink("/contact")}>
                             <Link href="/contact">Contact</Link>

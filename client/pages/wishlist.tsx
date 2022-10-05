@@ -22,9 +22,22 @@ export default Wishlist;
 
 const Title = styled.h1`
     text-align: center;
-    font-size: 5rem;
-    font-family: "Vujahday Script", serif;
+    font-size: 2rem;
+    font-family: "PT Serif", serif;
     margin-block: 8rem;
+    position: relative;
+
+    &::before {
+        content: "Wishlist";
+        opacity: 0.1;
+        color: #575454;
+        font-family: "Vujahday Script", serif;
+        font-size: 8rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 `;
 
 const Wrapper = styled.div`

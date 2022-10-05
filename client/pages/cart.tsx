@@ -1,10 +1,47 @@
+import axios from "axios";
+import { NextPage } from "next";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import ShoppingCartItem from "../components/ShoppingCart/ShoppingCartItem";
+import getStripe from "../lib/getStripe";
 import { RootState } from "../store";
 
-const ShoppingCart = () => {
+const ShoppingCart: NextPage = () => {
+    const router = useRouter();
     const cart = useSelector((state: RootState) => state.cart);
+
+    const handleCheckout = async () => {
+        const stripe = await getStripe();
+        /*
+        const response = await axios.post(
+            "http://localhost:3000/api/stripe",
+            JSON.stringify(cart),
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );*/
+        const response = await fetch("/api/stripe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.status === 500) return;
+
+        const data = await response.json();
+
+        toast.loading("Redirecting...");
+
+        console.log(data);
+        router.push(data.url);
+        // stripe?.redirectToCheckout({ sessionId: data.id });
+    };
+
     return (
         <>
             <Title>Shopping Cart</Title>
@@ -41,7 +78,7 @@ const ShoppingCart = () => {
                             <p className="title">Total</p>
                             <p className="price">19.00 $</p>
                         </div>
-                        <button className="checkout">
+                        <button className="checkout" onClick={handleCheckout}>
                             PROCEED TO CHECKOUT
                         </button>
                     </div>

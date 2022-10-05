@@ -13,6 +13,8 @@
     "@portabletext/types": "^1.0.3",
     "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
+    "@stripe/stripe-js": "^1.38.1",
+    "axios": "^1.0.0",
     "next": "12.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",

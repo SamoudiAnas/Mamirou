@@ -17,7 +17,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 
 //comps
 import Review from "../../components/Review/Review";
-import Carousel from "./Carousel";
+import Carousel from "../../components/Carousel/Carousel";
 
 //types
 import { Product } from "../../types/product";

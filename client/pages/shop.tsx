@@ -4,10 +4,11 @@ import styled from "styled-components";
 //comps
 import Filter from "../components/Filter/Filter";
 import Product from "../components/Product/Product";
+
+//types
 import { Product as ProductType } from "../types/product";
 
-const Shop = ({ products }: { products: any }) => {
-    console.log(products);
+const Shop = ({ products }: { products: ProductType[] }) => {
     return (
         <Wrapper className="page-container">
             <Title>Shop</Title>
@@ -30,7 +31,7 @@ export async function getStaticProps() {
     `
     );
 
-    const newProducts = products.map((product: any) => {
+    const newProducts: ProductType[] = products.map((product: any) => {
         return {
             _id: product._id,
             slug: product.slug.current,
@@ -62,9 +63,22 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
     text-align: center;
-    font-size: 5rem;
-    font-family: "Vujahday Script", serif;
+    position: relative;
+    font-family: "PT Serif", serif;
     margin-block: 8rem 6rem;
+
+    &::before {
+        content: "Shop";
+        opacity: 0.1;
+        white-space: nowrap;
+        color: #575454;
+        font-family: "Vujahday Script", serif;
+        font-size: 8rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 `;
 
 const ProductsContainer = styled.section`
