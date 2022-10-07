@@ -1,7 +1,23 @@
+import { NextPage } from "next";
+import { useState } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import Input from "../components/Default UI/Input";
+import login from "../utils/auth/login";
 
-const Signup = () => {
+const Login: NextPage = () => {
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const router = useRouter();
+
+    const signInHandler = () => {
+        const res: any = login(email, password);
+
+        res.error ? console.log(res.error) : router.push("/");
+    };
+
     return (
         <div className="page-container">
             <Wrapper>
@@ -11,19 +27,21 @@ const Signup = () => {
                     <form>
                         <Input
                             name="Email Address*"
-                            placeholder="Email Address"
-                            label="Email Address"
                             type="email"
+                            setInputText={setEmail}
                         />
                         <Input
                             name="Password*"
-                            placeholder="Password"
-                            label="Password"
                             type="password"
+                            setInputText={setPassword}
                         />
                     </form>
 
-                    <button type="submit" className="cta-btn">
+                    <button
+                        type="submit"
+                        className="cta-btn"
+                        onClick={signInHandler}
+                    >
                         LOGIN
                     </button>
                 </div>
@@ -32,7 +50,7 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Login;
 
 const Title = styled.h1`
     text-align: center;

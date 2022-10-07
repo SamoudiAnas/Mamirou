@@ -1,7 +1,51 @@
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 import Input from "../components/Default UI/Input";
+import login from "../utils/auth/login";
 
 const Signup = () => {
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [phone, setPhone] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [emailConfirm, setEmailConfirm] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+    const router = useRouter();
+
+    const registerUser = async () => {
+        if (emailConfirm !== email) {
+            toast.error("Emails don't match");
+        }
+
+        if (passwordConfirm !== password) {
+            toast.error("Passwords don't match");
+        }
+
+        const res = await axios
+            .post(
+                "/api/register",
+                { firstName, lastName, address, phone, email, password },
+                {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then(async () => {
+                await login(email, password);
+                router.push("/");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        console.log(res);
+    };
     return (
         <div className="page-container">
             <Wrapper>
@@ -16,56 +60,48 @@ const Signup = () => {
                     <div className="double-input-container">
                         <Input
                             name="First name*"
-                            placeholder="First name"
-                            label="First name"
+                            setInputText={setFirstName}
                             type="text"
                         />
                         <Input
                             name="Last name*"
-                            placeholder="Last name"
-                            label="Last name"
+                            setInputText={setLastName}
                             type="text"
                         />
                     </div>
                     <div className="double-input-container">
                         <Input
-                            name="Country*"
-                            placeholder="Country*"
-                            label="Country"
+                            name="Address*"
+                            setInputText={setAddress}
                             type="text"
                         />
                         <Input
                             name="Phone (optional)"
-                            placeholder="Phone (optional)"
-                            label="Phone (optional)"
+                            setInputText={setPhone}
                             type="text"
                         />
                     </div>
                     <div className="double-input-container">
                         <Input
                             name="Email*"
-                            placeholder="Email"
-                            label="Email"
+                            setInputText={setEmail}
                             type="email"
                         />
                         <Input
                             name="Confirm Email*"
-                            placeholder="Confirm Email"
-                            label="Confirm Email"
+                            setInputText={setEmailConfirm}
                             type="email"
                         />
                     </div>
                     <div className="double-input-container">
                         <Input
                             name="Password*"
-                            placeholder="Password"
-                            label="Password"
+                            setInputText={setPassword}
                             type="password"
                         />
                         <Input
                             name="Confirm Password*"
-                            placeholder="Confirm Password"
-                            label="Confirm Password"
+                            setInputText={setPasswordConfirm}
                             type="password"
                         />
                     </div>
@@ -91,7 +127,11 @@ const Signup = () => {
                     </div>
                 </form>
 
-                <button type="submit" className="cta-btn">
+                <button
+                    type="submit"
+                    className="cta-btn"
+                    onClick={registerUser}
+                >
                     CREATE MY ACCOUNT
                 </button>
             </Wrapper>

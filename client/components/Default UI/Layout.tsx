@@ -1,8 +1,10 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import styled from "styled-components";
 import Cart from "../Cart/Cart";
 import Footer from "../Footer/Footer";
 import Navbar from "../NavBar/Navbar";
+import Toast from "./Toast";
 import ToastMessage from "./ToastMessage";
 
 interface Props {
@@ -13,6 +15,7 @@ const Layout: React.FC<Props> = (props) => {
     return (
         <LayoutWrapper>
             <Navbar />
+            <Toast />
             <ToastMessage />
             <Cart />
             {props.children}

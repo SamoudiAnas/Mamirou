@@ -1,18 +1,26 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 interface InputProps {
     name: string;
-    placeholder: string;
-    label: string;
     type: string;
+    setInputText: Dispatch<SetStateAction<string>>;
 }
 
-const Input: React.FC<InputProps> = ({ name, label, type }) => {
+const Input: React.FC<InputProps> = ({ name, type, setInputText }) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputText(e.target.value);
+    };
+
     return (
         <InputWrapper>
-            <input id={name} placeholder=" " type={type} />
-            <label htmlFor="" className="placeholder">
+            <input
+                id={name}
+                placeholder=" "
+                type={type}
+                onChange={handleInputChange}
+            />
+            <label htmlFor={name} className="placeholder">
                 {name}
             </label>
         </InputWrapper>

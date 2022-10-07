@@ -71,14 +71,17 @@ const Navbar = () => {
                             onClick={() => setIsSearchBarOpen(true)}
                         />
                     </Icon>
-                    <Icon>
-                        <Link href="/wishlist">
+                    <Link href="/wishlist">
+                        <Icon>
                             <AiOutlineHeart />
-                        </Link>
-                        {wishlist.length !== 0 && (
-                            <div className="cart-items">{wishlist.length}</div>
-                        )}
-                    </Icon>
+
+                            {wishlist.length !== 0 && (
+                                <div className="cart-items">
+                                    {wishlist.length}
+                                </div>
+                            )}
+                        </Icon>
+                    </Link>
                     <Icon>
                         <AiOutlineShoppingCart onClick={() => openCartUI()} />
                         {cart.length !== 0 && (
