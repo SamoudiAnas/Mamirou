@@ -116,20 +116,27 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
 
 export default SingleProduct;
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
     const query = `*[_type == "product"] {
-        slug {
-          current
-        }
+      slug {
+        current
       }
-      `;
-    const paths = await client.fetch(query);
+    }
+    `;
+
+    const products = await client.fetch(query);
+
+    const paths = products.map((product: any) => ({
+        params: {
+            slug: product.slug.current,
+        },
+    }));
 
     return {
-        paths: paths.map((slug: string) => ({ params: { slug } })),
-        fallback: true,
+        paths,
+        fallback: "blocking",
     };
-}
+};
 
 export async function getStaticProps(context: any) {
     const { slug = "" } = context.params;
