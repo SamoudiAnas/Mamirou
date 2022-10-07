@@ -25,18 +25,22 @@ const validateForm = async (
         return { error: "Email is invalid" };
     }
 
-    await dbConnect();
-    const emailUser = await User.findOne({ email: email });
+    try {
+        await dbConnect();
+        const emailUser = await User.findOne({ email: email });
 
-    if (emailUser) {
-        return { error: "Email already exists" };
+        if (emailUser) {
+            return { error: "Email already exists" };
+        }
+
+        if (password.length < 5) {
+            return { error: "Password must have 5 or more characters" };
+        }
+
+        return null;
+    } catch (err: any) {
+        console.log(err);
     }
-
-    if (password.length < 5) {
-        return { error: "Password must have 5 or more characters" };
-    }
-
-    return null;
 };
 
 export default async function handler(
