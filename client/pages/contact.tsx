@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { FiCopy } from "react-icons/fi";
 import styled from "styled-components";
 import Input from "../components/Default UI/Input";
 
 const Contact = () => {
+    const [fullName, setFullName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [subject, setSubject] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+
     return (
         <Wrapper className="page-container">
             <div className="contact-content">
@@ -39,21 +45,14 @@ const Contact = () => {
                 <Input
                     type="text"
                     name="Full name"
-                    placeholder="Full name"
-                    label="Full name"
+                    setInputText={setFullName}
                 />
-                <Input
-                    type="email"
-                    name="Your email"
-                    placeholder="Your email"
-                    label="Your email"
-                />
+                <Input type="email" name="Your email" setInputText={setEmail} />
 
                 <Input
                     type="text"
                     name="Type a subject"
-                    placeholder="Type a subject"
-                    label="Type a subject"
+                    setInputText={setSubject}
                 />
 
                 <textarea
@@ -63,6 +62,7 @@ const Contact = () => {
                     rows={10}
                     placeholder="Type a message"
                     aria-label="Enter the message "
+                    onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
                 <button type="submit">Submit</button>
             </form>
