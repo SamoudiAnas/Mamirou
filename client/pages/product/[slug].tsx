@@ -117,9 +117,13 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
 export default SingleProduct;
 
 export async function getStaticPaths() {
-    const paths = await client.fetch(
-        `*[_type == "product" && defined(slug.current)][].slug.current`
-    );
+    const query = `*[_type == "product"] {
+        slug {
+          current
+        }
+      }
+      `;
+    const paths = await client.fetch(query);
 
     return {
         paths: paths.map((slug: string) => ({ params: { slug } })),
