@@ -60,24 +60,24 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
                 <p>&gt;</p>
                 <Link href="/shop">Products</Link>
                 <p>&gt;</p>
-                <Link href={"/product/" + slug}>{product.name}</Link>
+                <Link href={"/product/" + slug}>{product?.name}</Link>
             </ProductRoute>
 
             {/*-------------------------- */}
             <ProductPreview>
                 <Carousel
-                    images={product.image.map((img: SanityImageSource) =>
+                    images={product?.image.map((img: SanityImageSource) =>
                         urlFor(img).url()
                     )}
                 />
 
                 <div className="product-info">
-                    <h2>{product.name}</h2>
+                    <h2>{product?.name}</h2>
                     <Review />
-                    <p>{product.description}</p>
+                    <p>{product?.description}</p>
 
                     <h1 className="product-price">
-                        {Number(product.price).toFixed(2)}
+                        {Number(product?.price).toFixed(2)}
                         <span>$</span>
                     </h1>
                     <div className="quantity">
@@ -107,7 +107,7 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
             <div>
                 <h1 className="details-title">Details</h1>
                 <div className="details-content">
-                    <PortableText value={product.details} />
+                    <PortableText value={product?.details} />
                 </div>
             </div>
         </Wrapper>
