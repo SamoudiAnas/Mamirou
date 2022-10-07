@@ -39,7 +39,7 @@ const validateForm = async (
 
         return null;
     } catch (err: any) {
-        console.log(err);
+        return { error: "error on validation" };
     }
 };
 
@@ -53,37 +53,43 @@ export default async function handler(
             .status(200)
             .json({ error: "This API call only accepts POST methods" });
     }
+    try {
+        // get and validate body variables
+        const { firstName, lastName, address, phone, email, password } =
+            req.body;
 
-    // get and validate body variables
-    const { firstName, lastName, address, phone, email, password } = req.body;
+        const errorMessage = await validateForm(address, email, password);
 
-    const errorMessage = await validateForm(address, email, password);
+        if (errorMessage) {
+            return res.status(400).json(errorMessage as ResponseData);
+        }
 
-    if (errorMessage) {
-        return res.status(400).json(errorMessage as ResponseData);
+        // hash password
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        // create new User on MongoDB
+        const newUser = new User({
+            firstName,
+            lastName,
+            phone,
+            address,
+            email,
+            hashedPassword,
+        });
+
+        newUser
+            .save()
+            .then(() =>
+                res
+                    .status(200)
+                    .json({ msg: "Successfuly created new User: " + newUser })
+            )
+            .catch((err: string) =>
+                res
+                    .status(400)
+                    .json({ error: "Error on '/api/register': " + err })
+            );
+    } catch (err: any) {
+        return { error: "error on user creation" };
     }
-
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // create new User on MongoDB
-    const newUser = new User({
-        firstName,
-        lastName,
-        phone,
-        address,
-        email,
-        hashedPassword,
-    });
-
-    newUser
-        .save()
-        .then(() =>
-            res
-                .status(200)
-                .json({ msg: "Successfuly created new User: " + newUser })
-        )
-        .catch((err: string) =>
-            res.status(400).json({ error: "Error on '/api/register': " + err })
-        );
 }
