@@ -52,7 +52,19 @@ export default async function handler(
 
     // get and validate body variables
     const { firstName, lastName, address, phone, email, password } = req.body;
-
+    return res
+        .status(200)
+        .json({
+            error: "This API call only accepts POST methods",
+            msg: JSON.stringify({
+                firstName,
+                lastName,
+                address,
+                phone,
+                email,
+                password,
+            }),
+        });
     const errorMessage = await validateForm(address, email, password);
     if (errorMessage) {
         return res.status(400).json(errorMessage as ResponseData);
