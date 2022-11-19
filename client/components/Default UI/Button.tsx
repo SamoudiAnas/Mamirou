@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface ButtonProps {
     styling: "normal" | "reverse";
     text: string;
-    type?: string;
+    type?: "button" | "submit" | "reset" | undefined;
     onClick: (arg0: any) => void;
 }
 
@@ -12,17 +12,12 @@ const Button: React.FC<ButtonProps> = ({ styling, text, type, onClick }) => {
     return (
         <>
             {styling === "normal" ? (
-                <Wrapper styling={styling} type={type} onClick={onClick}>
+                <Wrapper type={type} onClick={onClick}>
                     {text}
                 </Wrapper>
             ) : (
-                <ReverseWrapper
-                    role="button"
-                    styling={styling}
-                    type={type}
-                    onClick={onClick}
-                >
-                    <span>{text}</span>
+                <ReverseWrapper type={type} onClick={onClick}>
+                    {text}
                 </ReverseWrapper>
             )}
         </>

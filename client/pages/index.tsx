@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 //icons
-import { getSession, useSession } from "next-auth/react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import Button from "../components/Default UI/Button";
-import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
     const router = useRouter();
