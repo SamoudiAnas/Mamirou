@@ -98,14 +98,14 @@ const FooterWrapper = styled.div`
             font-size: 1rem;
             font-family: "Montserrat", sans-serif;
             margin-block: 1rem;
-            color: #574545;
+            color: #ec4067;
         }
 
         button {
             flex: 1 1 20%;
             padding: 1rem 3rem;
-            background-color: #574545;
-            border: 2px solid #574545;
+            background-color: #ec4067;
+            border: 2px solid #ec4067;
             margin-top: 1rem;
             font-weight: 600;
             font-family: "Montserrat", sans-serif;
@@ -115,7 +115,7 @@ const FooterWrapper = styled.div`
             &:hover {
                 cursor: pointer;
                 color: white;
-                background-color: #574545;
+                background-color: #ec4067;
             }
         }
     }
@@ -185,7 +185,7 @@ const FooterContent = styled.div`
         padding: 0 0.375rem;
         color: white;
         border: 2px solid white;
-        background-color: #574545;
+        background-color: #ec4067;
     }
 
     .newsletter-form button[type="submit"]:hover {

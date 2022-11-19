@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../lib/dbConnect";
-import User from "../../model/user";
+import dbConnect from "../../../lib/dbConnect";
+import User from "../../../model/user";
 import bcrypt from "bcrypt";
 
 interface ResponseData {
@@ -19,7 +19,7 @@ const validateForm = async (
     password: string
 ) => {
     if (address.length < 3) {
-        return { error: "Must be a valmid address" };
+        return { error: "Must be a valid address" };
     }
     if (!validateEmail(email)) {
         return { error: "Email is invalid" };

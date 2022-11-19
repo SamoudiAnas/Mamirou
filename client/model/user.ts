@@ -8,6 +8,7 @@ const userSchema = new Schema({
         required: true,
         unique: false,
     },
+
     lastName: {
         type: String,
         required: true,
@@ -17,7 +18,7 @@ const userSchema = new Schema({
     address: {
         type: String,
         required: true,
-        unique: true,
+        unique: false,
     },
 
     email: {
@@ -28,7 +29,7 @@ const userSchema = new Schema({
 
     phone: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
 
@@ -38,6 +39,21 @@ const userSchema = new Schema({
         unique: false,
         minLength: 6,
     },
+    cart: [
+        {
+            type: Schema.Types.Mixed,
+        },
+    ],
+    wishlist: [
+        {
+            type: Schema.Types.Mixed,
+        },
+    ],
+    orders: [
+        {
+            type: Schema.Types.Mixed,
+        },
+    ],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

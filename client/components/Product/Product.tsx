@@ -91,7 +91,7 @@ const ProductWrapper = styled.div`
 
     &:hover > h3 {
         text-decoration: underline;
-        color: #574545;
+        color: #ec4067;
     }
 `;
 
@@ -145,14 +145,14 @@ const ProductIMGWrapper = styled.div`
         transition: transform 0.3s ease-in-out;
 
         svg {
-            fill: #574545;
+            fill: #ec4067;
             width: 100%;
             height: 100%;
         }
 
         &:hover {
             cursor: pointer;
-            background-color: #574545;
+            background-color: #ec4067;
             fill: white;
             transform: scale(1.2);
 

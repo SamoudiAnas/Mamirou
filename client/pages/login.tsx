@@ -2,9 +2,10 @@ import { NextPage } from "next";
 import { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
 import Input from "../components/Default UI/Input";
 import login from "../utils/auth/login";
+import toast from "react-hot-toast";
+import Link from "next/link";
 
 const Login: NextPage = () => {
     const [email, setEmail] = useState<string>("");
@@ -12,10 +13,10 @@ const Login: NextPage = () => {
 
     const router = useRouter();
 
-    const signInHandler = () => {
-        const res: any = login(email, password);
+    const signInHandler = async () => {
+        const res: any = await login(email, password);
 
-        res.error ? console.log(res.error) : router.push("/");
+        res.error ? toast.error(res.error) : router.push("/");
     };
 
     return (
@@ -44,6 +45,10 @@ const Login: NextPage = () => {
                     >
                         LOGIN
                     </button>
+                    <p className="switch">
+                        New to Marimu?{" "}
+                        <Link href="/signup">Create a new account now!</Link>
+                    </p>
                 </div>
             </Wrapper>
         </div>
@@ -82,11 +87,12 @@ const Wrapper = styled.div`
 
     & > div {
         width: 100%;
+        margin-bottom: 4rem;
     }
 
     .cta-btn {
         display: block;
-        margin: 1rem auto 8rem;
+        margin: 1rem auto 4rem;
         padding: 1rem 3rem;
         background-color: #574545;
         border: 2px solid #574545;
@@ -100,5 +106,9 @@ const Wrapper = styled.div`
             color: white;
             background-color: #574545;
         }
+    }
+
+    .switch {
+        text-align: center;
     }
 `;

@@ -84,12 +84,12 @@ const Wrapper = styled.div`
     .contact-title {
         font-family: "PT Serif", serif;
         font-size: 3rem;
-        color: #574545;
+        color: #ec4067;
     }
 
     h3 {
         font-family: "PT Serif", serif;
-        color: #574545;
+        color: #ec4067;
         margin-bottom: 1rem;
     }
 
@@ -136,7 +136,7 @@ const Wrapper = styled.div`
 
         input,
         textarea {
-            border: 1px solid #574545;
+            border: 1px solid #ec4067;
             width: 100%;
             padding: 1rem 1rem;
             margin-bottom: 0.75rem;
@@ -144,8 +144,8 @@ const Wrapper = styled.div`
         }
 
         button[type="submit"] {
-            background-color: #574545;
-            border: 2px solid #574545;
+            background-color: #ec4067;
+            border: 2px solid #ec4067;
             font-weight: 600;
             font-family: "Montserrat", sans-serif;
             color: white;
@@ -159,7 +159,7 @@ const Wrapper = styled.div`
             &:hover {
                 cursor: pointer;
                 color: white;
-                background-color: #574545;
+                background-color: #ec4067;
             }
         }
     }

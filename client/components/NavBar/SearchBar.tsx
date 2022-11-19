@@ -52,23 +52,23 @@ const Wrapper = styled.div`
         width: calc(100% - 3rem);
         padding: 0.75rem 1.5rem;
         height: 100%;
-        border: 1px solid #57454530;
+        border: 1px solid #ec406730;
         border-radius: 0.25rem;
         font-family: "Montserrat", sans-serif;
-        color: #57454590;
+        color: #ec406790;
 
         &::placeholder {
             font-family: "Montserrat", sans-serif;
-            color: #57454590;
+            color: #ec406790;
         }
 
         &:focus {
-            outline: 1px solid #57454590;
+            outline: 1px solid #ec406790;
         }
     }
 
     .search-icon {
-        fill: #57454590;
+        fill: #ec406790;
         position: absolute;
         right: 5rem;
         &:hover {
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
     }
 
     .close-icon {
-        fill: #57454590;
+        fill: #ec406790;
         position: absolute;
         right: 1rem;
         &:hover {

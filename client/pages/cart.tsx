@@ -13,8 +13,8 @@ const ShoppingCart: NextPage = () => {
     const cart = useSelector((state: RootState) => state.cart);
 
     const handleCheckout = async () => {
-        const stripe = await getStripe();
-        /*
+        /* const stripe = await getStripe();
+
         const response = await axios.post(
             "http://localhost:3000/api/stripe",
             JSON.stringify(cart),
@@ -23,23 +23,17 @@ const ShoppingCart: NextPage = () => {
                     "Content-Type": "application/json",
                 },
             }
-        );*/
-        const response = await fetch("/api/stripe", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        );
 
         if (response.status === 500) return;
 
-        const data = await response.json();
+        const data = response;
 
         toast.loading("Redirecting...");
 
         console.log(data);
         router.push(data.url);
-        // stripe?.redirectToCheckout({ sessionId: data.id });
+        // stripe?.redirectToCheckout({ sessionId: data.id });*/
     };
 
     return (
@@ -120,7 +114,7 @@ const CartTable = styled.div`
         display: flex;
         align-items: center;
         gap: 0.25rem;
-        color: #574545;
+        color: #ec4067;
 
         & > p {
             width: 2rem;
@@ -135,7 +129,7 @@ const CartTable = styled.div`
             font-size: 1.5rem;
             &:hover {
                 cursor: pointer;
-                background-color: #574545;
+                background-color: #ec4067;
                 color: white;
             }
         }
@@ -146,7 +140,7 @@ const OverAllData = styled.div`
     font-size: 1.5rem;
 
     .overall-data {
-        background-color: #574545;
+        background-color: #ec4067;
         padding: 2rem;
         color: white;
     }
@@ -171,7 +165,7 @@ const OverAllData = styled.div`
     .checkout {
         font-family: "Montserrat", sans-serif;
         background-color: white;
-        color: #574545;
+        color: #ec4067;
         font-weight: 600;
         width: 100%;
         padding-block: 1rem;

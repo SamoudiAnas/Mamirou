@@ -1,21 +1,28 @@
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
+import Button from "../components/Default UI/Button";
 import Input from "../components/Default UI/Input";
 import login from "../utils/auth/login";
 
 const Signup = () => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [address, setAddress] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    const [emailConfirm, setEmailConfirm] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [firstName, setFirstName] = useState<string>("");
+    const [emailConfirm, setEmailConfirm] = useState<string>("");
     const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+
     const router = useRouter();
+
+    const goToLogin = () => {
+        router.push("/login");
+    };
 
     const registerUser = async () => {
         if (emailConfirm !== email) {
@@ -26,7 +33,7 @@ const Signup = () => {
             toast.error("Passwords don't match");
         }
 
-        const res = await axios
+        await axios
             .post(
                 "/api/register",
                 { firstName, lastName, address, phone, email, password },
@@ -43,8 +50,8 @@ const Signup = () => {
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(error?.response?.data?.error);
             });
-        console.log(res);
     };
     return (
         <div className="page-container">
@@ -127,13 +134,19 @@ const Signup = () => {
                     </div>
                 </form>
 
-                <button
-                    type="submit"
-                    className="cta-btn"
-                    onClick={registerUser}
-                >
-                    CREATE MY ACCOUNT
-                </button>
+                <div className="inline-btns">
+                    <Button
+                        styling="normal"
+                        type="submit"
+                        text="CReate AN ACCOUNT"
+                        onClick={registerUser}
+                    ></Button>
+                    <Button
+                        styling="reverse"
+                        text="LOGIN"
+                        onClick={goToLogin}
+                    ></Button>
+                </div>
             </Wrapper>
         </div>
     );
@@ -150,6 +163,7 @@ const Title = styled.h1`
 const Wrapper = styled.div`
     max-width: 55rem;
     margin-inline: auto;
+    margin-bottom: 5rem;
 
     .flex-checkbox {
         display: flex;
@@ -213,20 +227,95 @@ const Wrapper = styled.div`
     }
 
     .cta-btn {
+        font-family: "Poppins", sans-serif;
+        position: relative;
         display: block;
-        margin: 4rem auto 8rem;
-        padding: 1rem 3rem;
-        background-color: #574545;
-        border: 2px solid #574545;
-        font-weight: 600;
-        font-family: "Montserrat", sans-serif;
-        color: white;
-        transition: all 0.3s ease-in-out;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin: 4rem 0;
+        background-color: rgb(245, 245, 245);
 
-        &:hover {
-            cursor: pointer;
-            color: white;
-            background-color: #574545;
+        & span {
+            position: relative;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            transition: 0.3s;
+            color: rgb(28, 31, 30);
+            background-color: rgb(245, 245, 245);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 0%;
+                height: 0%;
+                background: transparent;
+                opacity: 0;
+                z-index: 2;
+                transition: width 0.2s ease-in, height 0.15s 0.2s linear,
+                    opacity 0s 0.35s;
+            }
+            &::before {
+                top: 0;
+                left: 0;
+                border-left: 2px solid rgb(54, 56, 55);
+                border-bottom: 2px solid rgb(54, 56, 55);
+            }
+            &::after {
+                top: 0;
+                right: 0;
+                border-right: 2px solid rgb(54, 56, 55);
+                border-bottom: 2px solid rgb(54, 56, 55);
+            }
+            &:hover::before,
+            &:hover::after {
+                width: 50%;
+                height: 96%;
+                opacity: 1;
+                transition: height 0.2s 0.2s ease-in, width 0.2s 0.4s linear,
+                    opacity 0s 0.2s;
+            }
         }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            width: 15%;
+            height: 2px;
+            background-color: rgb(54, 56, 55);
+            z-index: 2;
+        }
+
+        &::before,
+        &::after {
+            top: 0;
+            transition: width 0.2s 0.35s ease-out;
+        }
+        &::before {
+            right: 50%;
+        }
+        &::after {
+            left: 50%;
+        }
+        &:hover::before,
+        &:hover::after {
+            width: 50%;
+            transition: width 0.2s ease-in;
+        }
+    }
+
+    .switch {
+        text-align: center;
     }
 `;

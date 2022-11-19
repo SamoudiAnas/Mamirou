@@ -1,10 +1,9 @@
-import React from "react";
-import { Toaster } from "react-hot-toast";
-import styled from "styled-components";
+import React, { useEffect } from "react";
+import Toast from "./Toast";
 import Cart from "../Cart/Cart";
 import Footer from "../Footer/Footer";
 import Navbar from "../NavBar/Navbar";
-import Toast from "./Toast";
+import styled from "styled-components";
 import ToastMessage from "./ToastMessage";
 
 interface Props {

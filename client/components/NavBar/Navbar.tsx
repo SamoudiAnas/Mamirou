@@ -123,6 +123,7 @@ const Header = styled.header`
 const Logo = styled.h3`
     font-family: "Vujahday Script", serif;
     font-size: 1.75rem;
+    color: #ec4067;
 
     &:hover {
         cursor: pointer;
@@ -147,7 +148,7 @@ const NavLinks = styled.ul`
     li {
         &:hover {
             a {
-                color: #575454;
+                color: #ec4067;
                 font-weight: 600;
             }
         }

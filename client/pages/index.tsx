@@ -1,9 +1,12 @@
-import { useState } from "react";
 import type { NextPage } from "next";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 //icons
+import { getSession, useSession } from "next-auth/react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import Button from "../components/Default UI/Button";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
     const [slideIndex, setSlideIndex] = useState<number>(0);
@@ -20,6 +23,10 @@ const Home: NextPage = () => {
         }
     };
 
+    const goToShop = () => {
+        useRouter().push("/shop");
+    };
+
     return (
         <div>
             <>
@@ -32,7 +39,11 @@ const Home: NextPage = () => {
                                 Only included for the most potent active
                                 botanical ingredients. Nothing More!
                             </p>
-                            <button>Buy Now</button>
+                            <Button
+                                styling="normal"
+                                text="Buy Now"
+                                onClick={goToShop}
+                            />
                         </div>
                         <div className="hero-img">
                             <img src="/assets/hero.jpg" alt="" />
@@ -47,7 +58,11 @@ const Home: NextPage = () => {
                             <h1>Shop By Categories</h1>
                             <p>Add our new arrivals to your weekly lineup</p>
                         </div>
-                        <button>SEE ALL</button>
+                        <Button
+                            styling="reverse"
+                            text="See All"
+                            onClick={goToShop}
+                        />
                     </div>
 
                     <div className="categories-grid">
@@ -81,7 +96,11 @@ const Home: NextPage = () => {
                             <h1>Popular Products</h1>
                             <p>Est placeat consequuntur a molestias ipsam!</p>
                         </div>
-                        <button>SEE ALL</button>
+                        <Button
+                            styling="reverse"
+                            text="See All"
+                            onClick={goToShop}
+                        />
                     </div>
 
                     <div className="products-grid">
@@ -106,11 +125,10 @@ const Home: NextPage = () => {
 
                 {/*------------ ABOUT MAMIRU ----------- */}
                 <AboutWrapper>
-                    <AboutContent className="page-container">
+                    <img src="/assets/about2.jpg" alt="" />
+
+                    <div className="about-content">
                         <div>
-                            <img src="/assets/about2.jpg" alt="" />
-                        </div>
-                        <div className="about-content">
                             <h1>About Mamiru</h1>
                             <p>
                                 Nunc fringilla ligula est, et fringilla dolor
@@ -130,7 +148,7 @@ const Home: NextPage = () => {
                             </p>
                             <button>READ MORE</button>
                         </div>
-                    </AboutContent>
+                    </div>
                 </AboutWrapper>
 
                 {/*------------ TESTIMONIALS ----------- */}
@@ -209,7 +227,7 @@ const Home: NextPage = () => {
 export default Home;
 
 const HeroWrapper = styled.div`
-    background-color: #574545;
+    background-color: #575454;
 `;
 
 const HeroContent = styled.div`
@@ -242,6 +260,10 @@ const HeroContent = styled.div`
     .hero-img {
         width: 100%;
         position: relative;
+        @media screen and (max-width: 48rem) {
+            display: none;
+        }
+
         & > img {
             position: relative;
             width: 100%;
@@ -286,62 +308,37 @@ const HeroContent = styled.div`
             max-height: 25rem;
         }
     }
-
-    button {
-        padding: 1rem 3rem;
-        background-color: transparent;
-        border: 2px solid white;
-        margin-top: 1rem;
-        font-weight: 600;
-        font-family: "Montserrat", sans-serif;
-        color: white;
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-            cursor: pointer;
-            color: #574545;
-            background-color: white;
-        }
-    }
 `;
 
 const ShopContent = styled.div`
     padding-block: 8rem;
-
     .title-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         h1 {
             font-family: "PT Serif", serif;
             font-size: 2.25rem;
         }
-
         p {
             font-size: 1rem;
             font-family: "Montserrat", sans-serif;
             margin-block: 1rem;
             color: #574545;
         }
-
         button {
-            padding: 1rem 3rem;
             background-color: white;
-            border: 2px solid #574545;
             margin-top: 1rem;
             font-weight: 600;
             font-family: "Montserrat", sans-serif;
             color: #574545;
             transition: all 0.3s ease-in-out;
-
             &:hover {
                 cursor: pointer;
                 color: white;
                 background-color: #574545;
             }
         }
-
         @media screen and (max-width: 36rem) {
             text-align: center;
             flex-direction: column;
@@ -349,32 +346,77 @@ const ShopContent = styled.div`
     }
 
     .categories-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
         margin-top: 2rem;
+
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 20rem;
+        gap: 1em;
+        grid-template-areas:
+            "one one two three "
+            "one one four five ";
+
+        @media (max-width: 48rem) {
+            grid-template-areas:
+                "one one two"
+                "one one three"
+                "four four five";
+        }
+
+        @media (max-width: 36rem) {
+            grid-template-areas:
+                "one two"
+                "three four"
+                "five five";
+        }
+
+        @media (max-width: 24rem) {
+            grid-template-areas:
+                "one"
+                "two"
+                "three"
+                "four"
+                "five";
+        }
     }
 
     .category {
         width: 100%;
-        height: 15rem;
+
         position: relative;
         overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         &:hover {
             cursor: pointer;
         }
-
         &:hover > button {
             top: 50%;
         }
 
         &:nth-child(1) {
-            grid-column-start: 1;
-            grid-column-end: 3;
-            grid-row-start: 1;
-            grid-row-end: 3;
-            height: 32rem;
+            grid-area: one;
+        }
+
+        &:nth-child(2) {
+            grid-area: two;
+        }
+
+        &:nth-child(3) {
+            grid-area: three;
+        }
+
+        &:nth-child(4) {
+            grid-area: four;
+        }
+
+        &:nth-child(5) {
+            grid-area: five;
         }
 
         button {
@@ -390,7 +432,6 @@ const ShopContent = styled.div`
             white-space: nowrap;
             color: white;
             transition: all 0.3s ease-in-out;
-
             &:hover {
                 cursor: pointer;
                 transform: translate(-50%, -50%) scale(1.1);
@@ -401,72 +442,58 @@ const ShopContent = styled.div`
 
 const ProductsContent = styled.div`
     padding-block: 8rem;
-
     .title-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         h1 {
             font-family: "PT Serif", serif;
             font-size: 2.25rem;
         }
-
         p {
             font-size: 1rem;
             font-family: "Montserrat", sans-serif;
             margin-block: 1rem;
             color: #574545;
         }
-
         button {
-            padding: 1rem 3rem;
             background-color: white;
-            border: 2px solid #574545;
             margin-top: 1rem;
             font-weight: 600;
             font-family: "Montserrat", sans-serif;
             color: #574545;
             transition: all 0.3s ease-in-out;
-
             &:hover {
                 cursor: pointer;
                 color: white;
                 background-color: #574545;
             }
         }
-
         @media screen and (max-width: 36rem) {
             flex-direction: column;
             text-align: center;
         }
     }
-
     .products-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
         gap: 2rem;
         margin-top: 2rem;
     }
-
     .product {
         width: 100%;
         height: 20rem;
         position: relative;
         overflow: hidden;
-
         img {
             object-fit: contain;
         }
-
         &:hover {
             cursor: pointer;
         }
-
         &:hover > button {
             top: 50%;
         }
-
         button {
             position: absolute;
             top: 150%;
@@ -480,7 +507,6 @@ const ProductsContent = styled.div`
             white-space: nowrap;
             color: white;
             transition: all 0.3s ease-in-out;
-
             &:hover {
                 cursor: pointer;
                 transform: translate(-50%, -50%) scale(1.1);
@@ -488,14 +514,11 @@ const ProductsContent = styled.div`
         }
     }
 `;
-
 const AboutWrapper = styled.div`
     background-color: #eeeeee80;
-    margin-block: 8rem;
+    margin-block: 4rem;
     overflow: hidden;
-`;
 
-const AboutContent = styled.div`
     @media screen and (min-width: 48rem) {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -504,11 +527,22 @@ const AboutContent = styled.div`
     }
 
     .about-content {
-        padding-block: 4rem;
+        display: flex;
+        align-items: center;
+    }
 
+    .about-content div {
+        max-width: 40rem;
         @media screen and (min-width: 48rem) {
-            padding-block: 8rem;
+            margin: auto 0;
         }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        max-height: 40rem;
+        object-fit: cover;
     }
 
     & > div {
@@ -517,22 +551,8 @@ const AboutContent = styled.div`
         min-width: 15rem;
         position: relative;
 
-        img {
-            width: 100%;
-            max-height: 25rem;
-            object-fit: cover;
-            margin-top: 2rem;
-
-            @media screen and (min-width: 48rem) {
-                width: 200%;
-                height: 100%;
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: -100%;
-                right: 0;
-                bottom: 0;
-            }
+        @media screen and (max-width: 48rem) {
+            padding: 3rem 1.5rem;
         }
 
         h1 {
@@ -540,22 +560,20 @@ const AboutContent = styled.div`
             font-size: 2.25rem;
             margin-bottom: 2rem;
         }
+    }
+    button {
+        margin-top: 4rem;
+        padding: 1rem 3rem;
+        color: #ec4067;
+        border: 2px solid #ec4067;
+        font-weight: 700;
+        font-family: "Montserrat", sans-serif;
+        transition: all 0.3s ease-in-out;
 
-        button {
-            padding: 1rem 3rem;
-            background-color: white;
-            border: 2px solid #574545;
-            font-weight: 600;
-            font-family: "Montserrat", sans-serif;
-            color: #574545;
-            margin-top: 2rem;
-            transition: all 0.3s ease-in-out;
-
-            &:hover {
-                cursor: pointer;
-                color: white;
-                background-color: #574545;
-            }
+        &:hover {
+            cursor: pointer;
+            color: white;
+            background-color: #ec4067;
         }
     }
 `;
@@ -583,7 +601,7 @@ const TestimonialsContent = styled.div`
         line-height: 2rem;
         margin-bottom: 1rem;
         font-family: "PT Serif", serif;
-        color: #574545;
+        color: #ec4067;
     }
 
     .testimonials-slider {
@@ -604,7 +622,7 @@ const TestimonialsContent = styled.div`
             min-width: 100%;
             text-align: center;
             line-height: 1.5rem;
-            color: #574545;
+            color: #ec4067;
         }
     }
 
@@ -617,15 +635,15 @@ const TestimonialsContent = styled.div`
 
         .icon {
             padding: 0.75rem;
-            fill: #574545;
+            fill: #ec4067;
             width: 3rem;
             height: 3rem;
-            border: 2px solid #574545;
+            border: 2px solid #ec4067;
             transition: all 0.15s linear;
 
             &:hover {
                 cursor: pointer;
-                background-color: #574545;
+                background-color: #ec4067;
                 fill: white;
             }
         }

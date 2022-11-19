@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import client from "../../client";
+import client from "../../lib/client";
 import styled from "styled-components";
 import urlFor from "../../lib/ImageBuilder";
 import { PortableText } from "@portabletext/react";

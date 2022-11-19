@@ -149,7 +149,7 @@ const WelcomeContent = styled.section`
     }
 
     p {
-        color: #574545;
+        color: #ec4067;
         line-height: 1.5rem;
     }
 `;
@@ -164,7 +164,7 @@ const Partners = styled.section`
 
     .partner-logo {
         text-align: center;
-        color: #57454560;
+        color: #ec406760;
         font-size: 2em;
         font-family: "PT Serif", serif;
         padding-block: 1.5rem;
@@ -188,7 +188,7 @@ const ServicesContent = styled.section`
         color: white;
         width: 100%;
         min-width: 12rem;
-        background-color: #574545;
+        background-color: #ec4067;
         padding: 2rem;
         text-align: center;
         flex: 1 1 30%;
@@ -225,7 +225,7 @@ const InfoContent = styled.section`
         }
 
         p {
-            color: #574545;
+            color: #ec4067;
             line-height: 1.5rem;
             margin-block: 1rem 3rem;
         }
