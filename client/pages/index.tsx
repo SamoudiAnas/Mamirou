@@ -9,6 +9,7 @@ import Button from "../components/Default UI/Button";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+    const router = useRouter();
     const [slideIndex, setSlideIndex] = useState<number>(0);
 
     const nextSlide = () => {
@@ -24,7 +25,7 @@ const Home: NextPage = () => {
     };
 
     const goToShop = () => {
-        useRouter().push("/shop");
+        router.push("/shop");
     };
 
     return (
