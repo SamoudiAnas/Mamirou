@@ -10,6 +10,7 @@ import { Product as ProductType } from "../../types/product";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { cartAC, RootState, wishlistAC } from "../../store";
+import toast from "react-hot-toast";
 
 interface ProductProps {
     product: ProductType;
@@ -24,10 +25,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
     const addToCart = () => {
         addItemToCart(product, 1);
+        toast.success("Product added to your cart!");
     };
 
     const addToWishlist = () => {
         addItemToWishlist(product);
+        toast.success("Product added to your wishlist!");
     };
 
     return (
@@ -48,7 +51,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                         <AiOutlineShoppingCart />
                     </div>
                     <Link href={"/product/" + product.slug}>
-                        <div className="product-icon" onClick={addToWishlist}>
+                        <div className="product-icon">
                             <AiOutlineEye />
                         </div>
                     </Link>

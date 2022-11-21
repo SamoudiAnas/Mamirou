@@ -57,9 +57,6 @@ const Navbar = () => {
                         <li className={isActiveLink("/shop")}>
                             <Link href="/shop">Shop</Link>
                         </li>
-                        <li className={isActiveLink("/blog")}>
-                            <Link href="/cart">Blog</Link>
-                        </li>
                         <li className={isActiveLink("/contact")}>
                             <Link href="/contact">Contact</Link>
                         </li>
@@ -192,7 +189,10 @@ const IconsContainer = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.75rem;
+    @media screen and (min-width: 24rem) {
+        gap: 1.5rem;
+    }
 `;
 
 const Icon = styled.li`

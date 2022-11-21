@@ -9,7 +9,7 @@ import { PortableText } from "@portabletext/react";
 
 //store
 import { bindActionCreators } from "redux";
-import { cartAC } from "../../store";
+import { cartAC, wishlistAC } from "../../store";
 import { useDispatch } from "react-redux";
 
 //icons
@@ -22,6 +22,7 @@ import Carousel from "../../components/Carousel/Carousel";
 //types
 import { Product } from "../../types/product";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import toast from "react-hot-toast";
 
 interface ProductProps {
     product: Product;
@@ -37,6 +38,7 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
     //redux
     const dispatch = useDispatch();
     const { addItemToCart } = bindActionCreators(cartAC, dispatch);
+    const { addItemToWishlist } = bindActionCreators(wishlistAC, dispatch);
 
     //handlers
     const handleAdd = () => {
@@ -44,13 +46,17 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
     };
 
     const handleMinus = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
+        if (quantity > 1) setQuantity(quantity - 1);
     };
 
     const addToCart = () => {
         addItemToCart(product, quantity);
+        toast.success("Product added to your cart!");
+    };
+
+    const addToWishlist = () => {
+        addItemToWishlist(product);
+        toast.success("Product added to your wishlist!");
     };
 
     return (
@@ -97,7 +103,10 @@ const SingleProduct: React.FC<ProductProps> = ({ product }) => {
                                 +
                             </button>
                         </div>
-                        <AiOutlineHeart className="add-wishlist" />
+                        <AiOutlineHeart
+                            className="add-wishlist"
+                            onClick={addToWishlist}
+                        />
                         <button className="add-cart" onClick={addToCart}>
                             Add to Cart
                         </button>

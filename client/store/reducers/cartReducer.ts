@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Reducer } from "redux";
 import { Product } from "../../types/product";
 import { CartActionTypes } from "../action-types";

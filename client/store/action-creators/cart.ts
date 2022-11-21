@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Dispatch } from "redux";
 import { Product } from "../../types/product";
 import { CART } from "../action-types/cart";

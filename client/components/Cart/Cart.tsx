@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 //icons
-import CartEmptyIcon from "./CartEmptyIcon";
+import CartEmptyIcon from "../../public/assets/illustrations/empty.svg";
 import { AiOutlineClose } from "react-icons/ai";
 
 //store
@@ -10,12 +10,22 @@ import { bindActionCreators } from "redux";
 import { cartUIAC, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "./CartItem";
+import { useRouter } from "next/router";
 
 const Cart = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const cartUI = useSelector((state: RootState) => state.cartUI);
     const cart = useSelector((state: RootState) => state.cart);
     const { closeCartUI } = bindActionCreators(cartUIAC, dispatch);
+    let price = 0;
+    cart.map((item) => {
+        price += item.quantity * item.product.price;
+    });
+
+    const goToShop = () => {
+        router.push("/shop");
+    };
 
     return (
         <Wrapper cartUI={cartUI}>
@@ -27,18 +37,30 @@ const Cart = () => {
                     onClick={() => closeCartUI()}
                 />
 
-                {cart.length !== 0 ? (
-                    cart?.map((cartItem) => (
-                        <CartItem
-                            key={cartItem.product._id}
-                            product={cartItem.product}
-                            quantity={cartItem.quantity}
-                        />
-                    ))
-                ) : (
-                    <div className="cart-empty">
-                        <CartEmptyIcon />
-                        <h2>Your cart is empty! Go back shopping.</h2>
+                <div className="cart__items">
+                    {cart.length !== 0 ? (
+                        cart?.map((cartItem) => (
+                            <CartItem
+                                key={cartItem.product._id}
+                                product={cartItem.product}
+                                quantity={cartItem.quantity}
+                            />
+                        ))
+                    ) : (
+                        <div className="cart-empty">
+                            <CartEmptyIcon />
+                            <h2>It seems like your cart is empty!</h2>
+                            <button onClick={goToShop}>See Our Products</button>
+                        </div>
+                    )}
+                </div>
+                {cart.length !== 0 && (
+                    <div className="cart__bottom">
+                        <div className="cart__total">
+                            <h3>Total</h3>
+                            <h2>${price}</h2>
+                        </div>
+                        <button>CHECKOUT NOW</button>
                     </div>
                 )}
             </CartWrapper>
@@ -80,7 +102,7 @@ const CartWrapper = styled.div`
     background-color: #f8f8f8;
     min-height: 100vh;
     z-index: 9999;
-    padding: 4rem 1rem;
+    padding: 4rem 1rem 2rem;
     z-index: 999;
     display: flex;
     align-items: center;
@@ -113,13 +135,14 @@ const CartWrapper = styled.div`
         justify-content: center;
         align-items: center;
         flex-grow: 1;
+        padding-top: 4rem;
         flex-direction: column;
         height: 100%;
         font-family: "PT Serif", serif;
         text-align: center;
 
         h2 {
-            color: #6c63ff;
+            color: #121212;
             margin-top: 2vh;
         }
 
@@ -130,5 +153,57 @@ const CartWrapper = styled.div`
             justify-content: center;
             padding-inline: 3rem;
         }
+
+        button {
+            width: 100%;
+            display: block;
+            margin: 1rem auto 4rem;
+            padding: 1rem 3rem;
+            background-color: #574545;
+            border: 2px solid #574545;
+            font-weight: 600;
+            font-family: "Montserrat", sans-serif;
+            color: white;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                cursor: pointer;
+                color: white;
+                background-color: #574545;
+            }
+        }
+    }
+
+    .cart__items {
+        flex-grow: 2;
+    }
+
+    .cart__bottom {
+        width: 100%;
+
+        button {
+            width: 100%;
+            display: block;
+            margin: 1rem auto 0;
+            padding: 1rem 3rem;
+            background-color: #574545;
+            border: 2px solid #574545;
+            font-weight: 600;
+            font-family: "Montserrat", sans-serif;
+            color: white;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                cursor: pointer;
+                color: white;
+                background-color: #574545;
+            }
+        }
+    }
+
+    .cart__total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 `;
